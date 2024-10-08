@@ -48,9 +48,9 @@ Functions are first class citizens in FP.
 
 Mathematical functions have a precise definition:
 
-- Given two sets _A_ and _B_
-- Subsets of the cartesian product of two sets
-- Elements of the first set appear only once
+* Given two sets _A_ and _B_
+* Subsets of the cartesian product of two sets
+* Elements of the first set appear only once
 
 Mathematical functions in FP are called _pure functions_
 
@@ -72,8 +72,8 @@ Sample function: only the highlighted items couples are part of the function def
 
 In software development a pure function is therefore characterized by two fundamental aspects:
 
-- __Determinism__: it always produces the same output when given the same input. This means that for any specific set of arguments, the function will consistently return the same result, without any variation
-- __No side effects__: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
+* __Determinism__: it always produces the same output when given the same input. This means that for any specific set of arguments, the function will consistently return the same result, without any variation
+* __No side effects__: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
 
 Pure functions are then easier to reason about, test and debug: this enhances code readability and modularity, allowing developers to reuse them across different contexts with no unintended consequences
 
@@ -90,20 +90,20 @@ Functions natively support composition
 ## FP/OOP comparison - principles of OOP
 
 * To write software using an OOP approach you need to understand (and use):
-    - encapsulation
-    - polymorphism
-    - inheritance
+    * encapsulation
+    * polymorphism
+    * inheritance
 * to write __good__ OOP software sowftare you also need:
-    - Design patterns (_decorator_, _factory_, _strategy_, _adapter_, ...)
+    * Design patterns (_decorator_, _factory_, _strategy_, _adapter_, ...)
 
 ---
 
 ## FP/OOP comparison - principles of FP
 
 * To write software using a FP approach you need to understand (and use):
-    - functions
+    * functions
 * to write __good__ OOP software sowftare you also need:
-    - functions
+    * functions
 
 ---
 
