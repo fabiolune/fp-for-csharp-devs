@@ -33,7 +33,15 @@ jobs:
       run: |
         chmod +x scripts/*.sh
         echo "##[section]Build Marp files to PDF"
-        ls -d marp/* | xargs -I{} sh -c "echo \"##[group]Build {}\"; ./scripts/build-marp.sh {} pdf && mv {}/*.pdf output; echo \"##[endgroup]\""
+        ls -d marp/* | xargs -I{} sh -c "echo \"##[group]Build {}\"; ./scripts/build-marp.sh {} pdf; echo \"##[endgroup]\""
+
+    - name:
+      run: |
+        for file in $(find . -maxdepth 3 -name main.pdf); do
+          dir="$(dirname $file)"
+          dir="$(basename $dir)"
+          mv $file output/$dir-$VERSION.pdf
+        done
 
     - name: Upload PDF files
       uses: actions/upload-artifact@v4
