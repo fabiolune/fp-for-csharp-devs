@@ -13,20 +13,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - name: Install dependencies
-      run: npm install
-    - uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: |
-          5.x
-          8.x
-        source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+    
     - uses: gittools/actions/gitversion/setup@v0.9.15
       with:
         versionSpec: '5.11.1'
+
+    - name: Compute version numbers
+      uses: gittools/actions/gitversion/execute@v0.9.15

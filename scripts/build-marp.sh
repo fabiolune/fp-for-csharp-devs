@@ -5,7 +5,7 @@ OUTPUT="${2:-pdf}"
 
 chmod -R 777 $DIR
 
-rm ${DIR}/main.pdf 2> /dev/null
+rm ${DIR}/main.$OUTPUT 2> /dev/null
 
 docker run \
     --rm \
