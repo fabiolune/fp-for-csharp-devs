@@ -34,7 +34,9 @@ jobs:
         chmod +x scripts/*.sh
         echo "##[section]Build Marp files to PDF"
         ./scripts/build-marp.sh src pdf
-        mv src/*.pdf output
+        mv src/main.pdf output/${OUTPUT_PDF_NAME_PREFIX}-${{ env.GITVERSION_NUGETVERSIONV2 }}.pdf
+      env:
+        OUTPUT_PDF_NAME_PREFIX: fp-slides
 
     - name: Upload PDF files
       uses: actions/upload-artifact@v4
