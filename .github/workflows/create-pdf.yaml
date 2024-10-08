@@ -50,6 +50,7 @@ jobs:
         echo "##[section]Build Marp files to html"
         ./scripts/build-marp.sh src html
         mv src/main.html pages/index.html
+        cp -R src/img pages/img
 
     - name: Push documentation to dedicated branch
       # if: ${{ github.event_name == 'release' }}
