@@ -15,6 +15,6 @@ Similarly, you can create an html version of them by just running:
 ./scripts/build-marp.sh src html
 ```
 
-The latest version is hosted on github ages at [](https://fabiolune.github.io/fp-for-csharp-devs/).
+The latest version is hosted on [github pages](https://fabiolune.github.io/fp-for-csharp-devs/).
 
 When using VSCode you can use the [official extensions](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode)
