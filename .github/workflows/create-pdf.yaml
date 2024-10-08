@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
+
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
@@ -24,3 +24,9 @@ jobs:
 
     - name: Compute version numbers
       uses: gittools/actions/gitversion/execute@v0.9.15
+
+    - name: Create PDF files
+      run: |
+        chmod +x scripts/*.sh
+        echo "Create PDF files"
+        ls -d marp/* | xargs -I{} sh -c "echo \"##[group]Build {}\"; ./build-marp.sh {} pdf; echo \"##[endgroup]\""
