@@ -25,13 +25,14 @@ jobs:
     - name: Compute version numbers
       uses: gittools/actions/gitversion/setup@v3.0.0
 
-    - name: prepare output directory
+    - name: prepare output directories and make scripts executable
       run: |
         mkdir -p output
+        mkdir -p pages
+        chmod +x scripts/*.sh
 
     - name: Create PDF files
       run: |
-        chmod +x scripts/*.sh
         echo "##[section]Build Marp files to PDF"
         ./scripts/build-marp.sh src pdf
         mv src/main.pdf output/${OUTPUT_PDF_NAME_PREFIX}-${{ env.GITVERSION_NUGETVERSIONV2 }}.pdf
@@ -43,3 +44,19 @@ jobs:
       with:
         name: pdf
         path: output
+
+    - name: Generate html version
+      run: |
+        echo "##[section]Build Marp files to html"
+        ./scripts/build-marp.sh src html
+        mv src/main.html pages/index.html
+
+    - name: Push documentation to dedicated branch
+      # if: ${{ github.event_name == 'release' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: crazy-max/ghaction-github-pages@v2.5.0
+      with:
+        target_branch: gh-pages
+        build_dir: ./pages
+
