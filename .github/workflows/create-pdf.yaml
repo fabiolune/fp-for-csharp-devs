@@ -37,10 +37,11 @@ jobs:
 
     - name:
       run: |
+        printenv
         for file in $(find . -maxdepth 3 -name main.pdf); do
           dir="$(dirname $file)"
           dir="$(basename $dir)"
-          mv $file output/$dir-$VERSION.pdf
+          mv $file output/$dir-${{ env.GITVERSION_NUGETVERSIONV2 }}.pdf
         done
 
     - name: Upload PDF files
