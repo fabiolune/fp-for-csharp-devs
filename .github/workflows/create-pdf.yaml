@@ -36,7 +36,7 @@ jobs:
         ls -d marp/* | xargs -I{} sh -c "echo \"##[group]Build {}\"; ./scripts/build-marp.sh {} pdf && mv {}/*.pdf output; echo \"##[endgroup]\""
 
     - name: Upload PDF files
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: pdf
         path: output
