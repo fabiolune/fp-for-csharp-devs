@@ -35,7 +35,7 @@ jobs:
       run: |
         echo "##[section]Inject version number"
         version=${{ env.GITVERSION_NUGETVERSIONV2 }}
-        echo $version
+        echo ${{ env.GITVERSION_NUGETVERSIONV2 }}
         sed -i 's|##{VERSION}##|'"$version"'|g' src/main.md
 
     - name: inject date
