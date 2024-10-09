@@ -31,7 +31,7 @@ paginate: true
 ---
 
 <!-- _color: white -->
-<!-- class: version -->
+<!-- _class: version -->
 <!-- _backgroundColor: #669 -->
 <!-- backgroundColor: #ddffff -->
 
