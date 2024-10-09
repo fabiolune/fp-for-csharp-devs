@@ -34,12 +34,15 @@ jobs:
     - name: inject computed version
       run: |
         echo "##[section]Inject version number"
-        sed -i 's|##{VERSION}##|'"${{ env.GITVERSION_NUGETVERSIONV2 }}"'|g' src/main.md
+        version=${{ env.GITVERSION_NUGETVERSIONV2 }}
+        echo $version
+        sed -i 's|##{VERSION}##|'"$version"'|g' src/main.md
 
     - name: inject date
       run: |
         echo "##[section]Inject date"
-        sed -i 's|##{DATE}##|'"$(date +%d/%m/%Y)"'|g' src/main.md
+        date=$(date +%d/%m/%Y)
+        sed -i 's|##{DATE}##|'"$date"'|g' src/main.md
 
     - name: Create PDF files
       run: |
