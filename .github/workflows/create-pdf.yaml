@@ -39,8 +39,7 @@ jobs:
     - name: inject date
       run: |
         echo "##[section]Inject date"
-        today=$(date +%d/%m/%Y)
-        sed -i "s/##{DATE}##/${today}/g" src/main.md
+        sed -i 's|##{DATE}##|'"$(date +%d/%m/%Y)"'|g' src/main.md
 
     - name: Create PDF files
       run: |
