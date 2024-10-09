@@ -28,6 +28,7 @@ jobs:
 
     - name: Check version
       run: |
+        printenv
         if [ "${{ env.GITVERSION_NUGETVERSIONV2 }}" = "" ]; then
           echo "##[error]Failed to determine version"
           exit 1
