@@ -31,6 +31,17 @@ jobs:
         mkdir -p pages
         chmod +x scripts/*.sh
 
+    - name: inject computed version
+      run: |
+        echo "##[section]Inject version number"
+        sed -i "s/##{VERSION}##/${{ env.GITVERSION_NUGETVERSIONV2 }}/g" src/main.md
+
+    - name: inject date
+      run: |
+        echo "##[section]Inject date"
+        today=$(date +%d/%m/%Y)
+        sed -i "s/##{DATE}##/${today}/g" src/main.md
+
     - name: Create PDF files
       run: |
         echo "##[section]Build Marp files to PDF"

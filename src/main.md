@@ -22,15 +22,24 @@ style: |
   section.h2 {
     color: red;
   }
+  section.version > p {
+    font-size: 10px;
+    text-align: right;
+  }
 
 paginate: true
 ---
 
 <!-- _color: white -->
+<!-- class: version -->
 <!-- _backgroundColor: #669 -->
 <!-- backgroundColor: #ddffff -->
 
 # Functional programming for C# developers: a gentle introduction (almost)
+
+version ##{VERSION}##
+
+published ##{DATE}##
 
 ![bg left blur:5px](img/cover.jpg)
 
@@ -146,6 +155,12 @@ Does this sound complicated? Let's see a practical example.
 A `List<T>` is a container for items of type `T`, and with the `Select` methods it acquires a functorial structure:
 
 ```List<T2> Select<T1, T2>(List<T1> source, Func<T2, TResult> selector)```
+
+---
+
+### Functor example
+
+![ ](img/csharp/functor.png)
 
 ---
 
