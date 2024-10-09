@@ -1,7 +1,7 @@
 # Functional programming for C# developers
 
-This repo contains the source code for a [presentation](src/main.md) on Functional programming in _dotnet_.
-The slides are prepared using [marp](https://marp.app/).
+This repo contains the source code for a [presentation](src/main.md) on Functional programming for _C#_ developers.
+The slides are created using [marp](https://marp.app/).
 
 ## Generate the slides
 

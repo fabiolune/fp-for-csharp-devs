@@ -7,6 +7,12 @@ style: |
   p:has(>img) {
     text-align: center;
   }
+  h3 {
+    font-size: 38px;
+  }
+  h2 {
+    font-size: 56px;
+  }
   section.h1.first {
     color: white;
   }
@@ -24,16 +30,17 @@ paginate: true
 <!-- _backgroundColor: #669 -->
 <!-- backgroundColor: #ddffff -->
 
+# Functional programming for C# developers: a gentle introduction (almost)
+
 ![bg left blur:5px](img/cover.jpg)
 
-# Functional programming for C# developers: a gentle introduction (almost)
 ---
 
-# Part I: Functions all the way down
+## Part I: Functions all the way down
 
 ---
 
-## Introduction to Functional Programming
+### Introduction to Functional Programming
 
 Functional programming (FP) is an approach to software development based, as the name suggests, on functions.
 
@@ -43,8 +50,7 @@ Functions are first class citizens in FP.
 
 ---
 
-
-## Mathematical Functions Definition
+### Mathematical Functions Definition
 
 Mathematical functions have a precise definition:
 
@@ -56,7 +62,7 @@ Mathematical functions in FP are called _pure functions_
 
 ---
 
-### A simple example
+#### A simple example
 
 Sample function: only the highlighted items couples are part of the function definition:
 
@@ -68,7 +74,7 @@ Sample function: only the highlighted items couples are part of the function def
 
 ---
 
-## Pure Functions
+### Pure Functions
 
 In software development a pure function is therefore characterized by two fundamental aspects:
 
@@ -79,53 +85,71 @@ Pure functions are then easier to reason about, test and debug: this enhances co
 
 ---
 
-## Composition
+### Composition
 
-Functions natively support composition
+Consider two functions _f_ and _g_ where the output set of _f_ is (contained in) the input set of _g_:
 
-![ ](img/composition.png)
+![ ](img/function-composition.png)
+
+We can then defined define thier composition as `(g○f)(x) ≡ g(f(x))`
 
 ---
 
-## FP/OOP comparison - principles of OOP
+### FP/OOP comparison - principles of OOP
 
 * To write software using an OOP approach you need to understand (and use):
-    * encapsulation
-    * polymorphism
-    * inheritance
+  * encapsulation
+  * polymorphism
+  * inheritance
 * to write __good__ OOP software sowftare you also need:
-    * Design patterns (_decorator_, _factory_, _strategy_, _adapter_, ...)
+  * Design patterns (_decorator_, _factory_, _strategy_, _adapter_, ...)
 
 ---
 
-## FP/OOP comparison - principles of FP
+### FP/OOP comparison - principles of FP
 
 * To write software using a FP approach you need to understand (and use):
-    * functions
+  * functions
 * to write __good__ OOP software sowftare you also need:
-    * functions
+  * functions
 
 ---
 
-## Example 1: Decorator pattern
+### Example 1: Decorator pattern
 
-![](img/csharp/decorator.png)
+![ ](img/csharp/decorator.png)
 
 ---
 
-## Example 2: Strategy pattern
+### Example 2: Strategy pattern
 
-![](img/csharp/strategy.png)
+![ ](img/csharp/strategy.png)
 
 ---
 <!-- _color: white -->
 ![bg brightness:.4](img/hyperspace.jpg)
-# Part II: Venture into the _Monads_ hyperspace
-_(fasten your seatbelts)_
+
+## Part II: Venture into the _Monads_ hyperspace
+
+...fasten your seatbelts
 
 ---
 
-## Monads
+### Functors
+
+A __Functor__ is any type that acts as a generic wrapper (or container), together with a function to transform the values it holds while preserving the container's structure.
+
+This process is called _mapping_.
+
+Does this sound complicated? Let's see a practical example.
+
+A `List<T>` is a container for items of type `T`, and with the `Select` methods it acquires a functorial structure:
+
+```List<T2> Select<T1, T2>(List<T1> source, Func<T2, TResult> selector)```
+
+---
+
+### Monads
 
 Intuitively, monads can be defined in terms of native types as follows:
 
@@ -135,7 +159,7 @@ Intuitively, monads can be defined in terms of native types as follows:
 
 ---
 
-## Mathematical properties (Advanced)
+### Mathematical properties (Advanced)
 
 _`unit`_ and _`bind`_ must satisfy three properties:
 
@@ -145,7 +169,7 @@ _`unit`_ and _`bind`_ must satisfy three properties:
 
 ---
 
-## Monads as Functors (Advanced)
+### Monads as Functors (Advanced)
 
 Monads are also _Functors_, a more generic structure that still relies on the embedding _unit_ function and exposes a _map_ function:
 
@@ -156,24 +180,25 @@ The map function taks the wrapped value and maps it to another wrappable value t
 
 ---
 
-## The Option Monad
+### The Option Monad
 
 The __Option__ monad (also called __Maybe__) is generally used to describe situations where data can be present or not: it can contain _Some_ data or _None_.
 
 To implement it in _C#_ we need all the elements that characterize a monad:
-- a _Unit_ function
-- a _Map_ function
-- a _Bind_ function
+
+* a _Unit_ function
+* a _Map_ function
+* a _Bind_ function
 
 ---
 
-## The Option Monad: a simple C# implementation
+### The Option Monad: a simple C# implementation
 
-![](img/csharp/option.png)
+![ ](img/csharp/option.png)
 
 ---
 
-# References
+### References
 
 - [Functional Programming Design Patterns](https://fsharpforfunandprofit.com/fppatterns/)
 - [tiny-fp](https://github.com/FrancoMelandri/tiny-fp)
