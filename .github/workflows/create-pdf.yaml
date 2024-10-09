@@ -18,12 +18,20 @@ jobs:
       with:
         fetch-depth: 0
     
-    - uses: gittools/actions/gitversion/setup@v3.0.0
-      with:
-        versionSpec: '5.11.1'
-
-    - name: Compute version numbers
+    - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v3.0.0
+      with:
+        versionSpec: '6.x'
+
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v3.0.0
+
+    - name: Check version
+      run: |
+        if [ "${{ env.GITVERSION_NUGETVERSIONV2 }}" = "" ]; then
+          echo "##[error]Failed to determine version"
+          exit 1
+        fi
 
     - name: prepare output directories and make scripts executable
       run: |
