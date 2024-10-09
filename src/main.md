@@ -91,7 +91,7 @@ Consider two functions _f_ and _g_ where the output set of _f_ is (contained in)
 
 ![ ](img/function-composition.png)
 
-We can then defined define thier composition as `(g○f)(x) ≡ g(f(x))`
+We can then defined define their composition as `(g○f)(x) ≡ g(f(x))`
 
 ---
 
