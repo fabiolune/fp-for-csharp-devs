@@ -26,20 +26,21 @@ style: |
     font-size: 10px;
     text-align: right;
   }
-
+  section > footer {
+    color: white;
+    text-align: right;
+    width: 90%;
+  }
 paginate: true
+backgroundColor: #ddffff
 ---
-
+<!-- _footer: version ##{VERSION}## published ##{DATE}##-->
 <!-- _color: white -->
 <!-- _class: version -->
 <!-- _backgroundColor: #669 -->
-<!-- backgroundColor: #ddffff -->
+<!-- _paginate: skip -->
 
 # Functional programming for C# developers: a gentle introduction (almost)
-
-version ##{VERSION}##
-
-published ##{DATE}##
 
 ![bg left blur:5px](img/cover.jpg)
 
@@ -75,11 +76,11 @@ Mathematical functions in FP are called _pure functions_
 
 Sample function: only the highlighted items couples are part of the function definition:
 
-|  A / B |    b1    |      b2      |      b3      |      b4        |
-|--------|----------|--------------|--------------|----------------|
-| a1     | (a1, b1) | __(a1, b2)__ |   (a1, b3)   |   (a1, b4)     |
-| a2     | (a2, b1) |   (a2, b2)   |   (a2, b3)   |   __(a2, b4)__ |
-| a3     | (a3, b1) |   (a3, b2)   | __(a3, b3)__ |   (a3, b4)     |
+|  A / B |      b1      |      b2      |      b3      |    b4        |
+|--------|--------------|--------------|--------------|--------------|
+|   a1   |   (a1, b1)   | __(a1, b2)__ |   (a1, b3)   |   (a1, b4)   |
+|   a2   |   (a2, b1)   |   (a2, b2)   |   (a2, b3)   | __(a2, b4)__ |
+|   a3   |   (a3, b1)   |   (a3, b2)   | __(a3, b3)__ |   (a3, b4)   |
 
 ---
 
