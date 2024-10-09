@@ -29,7 +29,7 @@ jobs:
     - name: Check version
       run: |
         printenv
-        if [ "${{ env.GITVERSION_NUGETVERSIONV2 }}" = "" ]; then
+        if [ "${{ env.GitVersion_FullSemVer }}" = "" ]; then
           echo "##[error]Failed to determine version"
           exit 1
         fi
@@ -43,8 +43,8 @@ jobs:
     - name: inject computed version
       run: |
         echo "##[section]Inject version number"
-        version=${{ env.GITVERSION_NUGETVERSIONV2 }}
-        echo ${{ env.GITVERSION_NUGETVERSIONV2 }}
+        version=${{ env.GitVersion_FullSemVer }}
+        echo ${{ env.GitVersion_FullSemVer }}
         sed -i 's|##{VERSION}##|'"$version"'|g' src/main.md
 
     - name: inject date
@@ -57,7 +57,7 @@ jobs:
       run: |
         echo "##[section]Build Marp files to PDF"
         ./scripts/build-marp.sh src pdf
-        mv src/main.pdf output/${OUTPUT_PDF_NAME_PREFIX}-${{ env.GITVERSION_NUGETVERSIONV2 }}.pdf
+        mv src/main.pdf output/${OUTPUT_PDF_NAME_PREFIX}-${{ env.GitVersion_FullSemVer }}.pdf
       env:
         OUTPUT_PDF_NAME_PREFIX: fp-slides
 
