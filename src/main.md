@@ -46,6 +46,34 @@ backgroundColor: #ddffff
 
 ---
 
+## Agenda
+
+* **Part I: Functions all the way down**
+  * What is Functional Programming?
+  * Pure Functions & Mathematical Foundations
+  * Function Composition
+  * FP vs OOP Comparison
+
+* **Part II: Advanced Concepts**
+  * Functors
+  * Monads
+  * The Option Monad
+
+* **Practical Applications for C# Developers**
+
+---
+
+## Why Functional Programming for C# Developers?
+
+* **You already use it**: LINQ, delegates, lambda expressions, pattern matching
+* **Better code quality**: More predictable, testable, and maintainable code
+* **Reduced bugs**: Immutability and pure functions eliminate entire classes of errors
+* **Parallel processing**: FP naturally supports concurrent and parallel execution
+* **Industry trends**: Growing adoption in enterprise applications and modern frameworks
+* **Performance**: Often more efficient due to compiler optimizations and reduced side effects
+
+---
+
 ## Part I: Functions all the way down
 
 ---
@@ -72,13 +100,20 @@ Mathematical functions have a precise definition:
 
 #### A simple example
 
-Sample function: only the highlighted items couples are part of the function definition:
+Consider a function that maps people to their favorite colors:
 
-|  A / B |      b1      |      b2      |      b3      |    b4        |
-|--------|--------------|--------------|--------------|--------------|
-|   a1   |   (a1, b1)   | __(a1, b2)__ |   (a1, b3)   |   (a1, b4)   |
-|   a2   |   (a2, b1)   |   (a2, b2)   |   (a2, b3)   | __(a2, b4)__ |
-|   a3   |   (a3, b1)   |   (a3, b2)   | __(a3, b3)__ |   (a3, b4)   |
+**Function f: Person → Color**
+* a1 (Alice) → b2 (Blue)
+* a2 (Bob) → b4 (Green)  
+* a3 (Carol) → b3 (Red)
+
+|  Person / Color |   b1 (Yellow)    |   **b2 (Blue)**  |   **b3 (Red)**   |  **b4 (Green)**  |
+|-----------------|------------------|-------------------|-------------------|-------------------|
+|   a1 (Alice)    |   (a1, b1)       | **(a1, b2)** ✓   |   (a1, b3)        |   (a1, b4)        |
+|   a2 (Bob)      |   (a2, b1)       |   (a2, b2)        |   (a2, b3)        | **(a2, b4)** ✓    |
+|   a3 (Carol)    |   (a3, b1)       |   (a3, b2)        | **(a3, b3)** ✓    |   (a3, b4)        |
+
+**Key property**: Each person (input) maps to exactly one color (output)
 
 ---
 
@@ -88,7 +123,32 @@ Pure functions are easier to reason about, test and debug: this enhances code re
 In software development a pure function is therefore characterized by two fundamental aspects:
 
 * __Determinism__: it always produces the same output when given the same input. This means that for any specific set of arguments, the function will consistently return the same result, without any variation
-* __No side effects__: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
+* **No side effects**: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
+
+---
+
+### Pure vs Impure Functions in C#
+
+```csharp
+// ❌ Impure: depends on external state, has side effects
+private static int counter = 0;
+public int GetNextId() 
+{
+    counter++;           // Side effect: modifies external state
+    return counter;      // Non-deterministic: different results
+}
+
+// ✅ Pure: deterministic, no side effects
+public int Add(int a, int b) 
+{
+    return a + b;        // Same inputs always produce same output
+}
+
+public string FormatName(string first, string last) 
+{
+    return $"{last}, {first}";  // Pure transformation
+}
+```
 
 ---
 
@@ -108,7 +168,7 @@ We can then define their composition as `(g○f)(x) ≡ g(f(x))`
   * encapsulation
   * polymorphism
   * inheritance
-* to write __good__ OOP software software you also need:
+* to write __good__ OOP software you also need:
   * Design patterns (_decorator_, _factory_, _strategy_, _adapter_, ...)
 
 ---
@@ -117,7 +177,7 @@ We can then define their composition as `(g○f)(x) ≡ g(f(x))`
 
 * To write software using a FP approach you need to understand (and use):
   * functions
-* to write __good__ OOP software sowftare you also need:
+* to write __good__ FP software you also need:
   * functions
 
 ---
@@ -150,9 +210,35 @@ This process is called _mapping_.
 
 Does this sound complicated? Let's see a practical example.
 
-A `List<T>` is a container for items of type `T`, and with the `Select` methods it acquires a functorial structure:
+A `List<T>` is a container for items of type `T`, and with the `Select` method it acquires a functorial structure:
 
-```List<T2> Select<T1, T2>(List<T1> source, Func<T1, T02> selector)```
+```csharp
+List<T2> Select<T1, T2>(List<T1> source, Func<T1, T2> selector)
+```
+
+This is exactly the LINQ `Select` method you already know!
+
+---
+
+### LINQ as Functional Programming
+
+You're already doing functional programming with LINQ!
+
+```csharp
+var numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+// Functional pipeline: pure functions, no mutation
+var result = numbers
+    .Where(x => x % 2 == 0)        // Filter
+    .Select(x => x * x)            // Map/Transform 
+    .Sum();                        // Reduce
+
+// Same as: var result = numbers.Where(IsEven).Select(Square).Sum();
+
+// Pure helper functions
+static bool IsEven(int x) => x % 2 == 0;
+static int Square(int x) => x * x;
+```
 
 ---
 
@@ -205,6 +291,34 @@ To implement it in _C#_ we need all the elements that characterize a monad:
 
 ---
 
+### Option Monad: Practical Usage
+
+```csharp
+// Without Option: null checks everywhere
+public string GetUserDisplayName(int userId)
+{
+    var user = GetUser(userId);
+    if (user == null) return "Unknown";
+    
+    var profile = GetProfile(user.Id);
+    if (profile == null) return user.Name;
+    
+    return profile.DisplayName ?? user.Name;
+}
+
+// With Option: chain operations safely
+public string GetUserDisplayNameSafe(int userId)
+{
+    return GetUserOption(userId)
+        .Bind(user => GetProfileOption(user.Id)
+            .Map(profile => profile.DisplayName)
+            .Or(() => Some(user.Name)))
+        .ValueOr("Unknown");
+}
+```
+
+---
+
 ### The Option Monad: a simple C# implementation
 
 ![ ](img/csharp/option.png)
@@ -213,7 +327,7 @@ To implement it in _C#_ we need all the elements that characterize a monad:
 
 ### References
 
-- [Functional Programming Design Patterns](https://fsharpforfunandprofit.com/fppatterns/)
-- [tiny-fp](https://github.com/FrancoMelandri/tiny-fp)
-- [Basic understanding of Monads, Monoids, and Functor](https://blog.knoldus.com/basic-understanding-of-monads-monoids-and-functor/)
-- [Your easy guide to Monads, Applicatives, & Functors](https://medium.com/@lettier/your-easy-guide-to-monads-applicatives-functors-862048d61610)
+* [Functional Programming Design Patterns](https://fsharpforfunandprofit.com/fppatterns/)
+* [tiny-fp](https://github.com/FrancoMelandri/tiny-fp)
+* [Basic understanding of Monads, Monoids, and Functor](https://blog.knoldus.com/basic-understanding-of-monads-monoids-and-functor/)
+* [Your easy guide to Monads, Applicatives, & Functors](https://medium.com/@lettier/your-easy-guide-to-monads-applicatives-functors-862048d61610)
