@@ -98,7 +98,7 @@ Consider two functions _f_ and _g_ where the output set of _f_ is (contained in)
 
 ![ ](img/function-composition.png)
 
-We can then defined define their composition as `(g○f)(x) ≡ g(f(x))`
+We can then define their composition as `(g○f)(x) ≡ g(f(x))`
 
 ---
 
@@ -108,7 +108,7 @@ We can then defined define their composition as `(g○f)(x) ≡ g(f(x))`
   * encapsulation
   * polymorphism
   * inheritance
-* to write __good__ OOP software sowftare you also need:
+* to write __good__ OOP software software you also need:
   * Design patterns (_decorator_, _factory_, _strategy_, _adapter_, ...)
 
 ---
@@ -152,7 +152,7 @@ Does this sound complicated? Let's see a practical example.
 
 A `List<T>` is a container for items of type `T`, and with the `Select` methods it acquires a functorial structure:
 
-```List<T2> Select<T1, T2>(List<T1> source, Func<T2, TResult> selector)```
+```List<T2> Select<T1, T2>(List<T1> source, Func<T1, T02> selector)```
 
 ---
 
