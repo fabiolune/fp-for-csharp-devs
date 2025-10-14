@@ -105,8 +105,6 @@ Mathematical functions have a precise definition:
 
 Consider a function that maps people to their favorite colors:
 
-Function **f: Person → Color**
-
 - a1 (Alice) → b2 (Blue)
 - a2 (Bob) → b4 (Green)
 - a3 (Carol) → b3 (Red)
@@ -126,8 +124,8 @@ Function **f: Person → Color**
 Pure functions are easier to reason about, test and debug: this enhances code readability and modularity, allowing developers to reuse them across different contexts with no unintended consequences.
 In software development a pure function is therefore characterized by two fundamental aspects:
 
-- **Determinism**: it always produces the same output when given the same input. This means that for any specific set of arguments, the function will consistently return the same result, without any variation
-- **No side effects**: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
+* **Determinism**: it always produces the same output when given the same input. This means that for any specific set of arguments, the function will consistently return the same result, without any variation
+* **No side effects**: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
 
 ---
 
@@ -286,7 +284,29 @@ static int Square(int x) => x * x;
 
 ### Functor example
 
-![ ](img/csharp/functor.png)
+```C#
+static Output nullify(Input i) => null;
+static Output combine(Input i) => new($"{i.FirstName} {i.LastName}");
+
+var input = new Input("Fabio", "Lonegro");
+
+var result = new Result<Input>(input).Map(combine);
+Console.WriteLine($"is {nameof(result)} Successful? {result.IsSuccessful}"); // True
+
+var result2 = new Result<Input>(input).Map(nullify);
+Console.WriteLine($"is {nameof(result2)} Successful? {result2.IsSuccessful}"); // False
+
+readonly struct Result<T>(T value) where T : class
+{
+    private T Value { get; } = value;
+    public bool IsSuccessful { get; } = value is not null;
+    public Result<U> Map<U>(Func<T, U> map) where U : class => new(map(Value));
+}
+
+sealed record Input(string FirstName, string LastName);
+
+sealed record Output(string FullName);
+```
 
 ---
 
