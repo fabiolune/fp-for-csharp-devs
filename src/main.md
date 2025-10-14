@@ -34,6 +34,7 @@ style: |
 paginate: true
 backgroundColor: #ddffff
 ---
+
 <!-- _footer: version ##{VERSION}## published ##{DATE}##-->
 <!-- _color: white -->
 <!-- _class: version -->
@@ -48,29 +49,31 @@ backgroundColor: #ddffff
 
 ## Agenda
 
-* **Part I: Functions all the way down**
-  * What is Functional Programming?
-  * Pure Functions & Mathematical Foundations
-  * Function Composition
-  * FP vs OOP Comparison
+- **Part I: Functions all the way down**
 
-* **Part II: Advanced Concepts**
-  * Functors
-  * Monads
-  * The Option Monad
+  - What is Functional Programming?
+  - Pure Functions & Mathematical Foundations
+  - Function Composition
+  - FP vs OOP Comparison
 
-* **Practical Applications for C# Developers**
+- **Part II: Advanced Concepts**
+
+  - Functors
+  - Monads
+  - The Option Monad
+
+- **Practical Applications for C# Developers**
 
 ---
 
 ## Why Functional Programming for C# Developers?
 
-* **You already use it**: LINQ, delegates, lambda expressions, pattern matching
-* **Better code quality**: More predictable, testable, and maintainable code
-* **Reduced bugs**: Immutability and pure functions eliminate entire classes of errors
-* **Parallel processing**: FP naturally supports concurrent and parallel execution
-* **Industry trends**: Growing adoption in enterprise applications and modern frameworks
-* **Performance**: Often more efficient due to compiler optimizations and reduced side effects
+- **You already use it**: LINQ, delegates, lambda expressions, pattern matching
+- **Better code quality**: More predictable, testable, and maintainable code
+- **Reduced bugs**: Immutability and pure functions eliminate entire classes of errors
+- **Parallel processing**: FP naturally supports concurrent and parallel execution
+- **Industry trends**: Growing adoption in enterprise applications and modern frameworks
+- **Performance**: Often more efficient due to compiler optimizations and reduced side effects
 
 ---
 
@@ -82,7 +85,7 @@ backgroundColor: #ddffff
 
 Functional programming (FP) is an approach to software development based, as the name suggests, on functions.
 
-Functions (to be considered as mathematical functions) are called, in FP, __pure functions__.
+Functions (to be considered as mathematical functions) are called, in FP, **pure functions**.
 
 Functions are first class citizens in FP.
 
@@ -92,9 +95,9 @@ Functions are first class citizens in FP.
 
 Mathematical functions have a precise definition:
 
-* Given two sets _A_ and _B_
-* Subsets of the cartesian product of two sets
-* Elements of the first set appear only once
+- Given two sets _A_ and _B_
+- Subsets of the cartesian product of two sets
+- Elements of the first set appear only once
 
 ---
 
@@ -102,18 +105,19 @@ Mathematical functions have a precise definition:
 
 Consider a function that maps people to their favorite colors:
 
-**Function f: Person → Color**
-* a1 (Alice) → b2 (Blue)
-* a2 (Bob) → b4 (Green)  
-* a3 (Carol) → b3 (Red)
+Function **f: Person → Color**
 
-|  Person / Color |   b1 (Yellow)    |   **b2 (Blue)**  |   **b3 (Red)**   |  **b4 (Green)**  |
-|-----------------|------------------|-------------------|-------------------|-------------------|
-|   a1 (Alice)    |   (a1, b1)       | **(a1, b2)** ✓   |   (a1, b3)        |   (a1, b4)        |
-|   a2 (Bob)      |   (a2, b1)       |   (a2, b2)        |   (a2, b3)        | **(a2, b4)** ✓    |
-|   a3 (Carol)    |   (a3, b1)       |   (a3, b2)        | **(a3, b3)** ✓    |   (a3, b4)        |
+- a1 (Alice) → b2 (Blue)
+- a2 (Bob) → b4 (Green)
+- a3 (Carol) → b3 (Red)
 
-**Key property**: Each person (input) maps to exactly one color (output)
+| Person / Color | b1 (Yellow) | **b2 (Blue)**  | **b3 (Red)**   | **b4 (Green)** |
+| -------------- | ----------- | -------------- | -------------- | -------------- |
+| a1 (Alice)     | (a1, b1)    | **(a1, b2)** ✓ | (a1, b3)       | (a1, b4)       |
+| a2 (Bob)       | (a2, b1)    | (a2, b2)       | (a2, b3)       | **(a2, b4)** ✓ |
+| a3 (Carol)     | (a3, b1)    | (a3, b2)       | **(a3, b3)** ✓ | (a3, b4)       |
+
+> **Key property**: Each person (input) maps to exactly one color (output)
 
 ---
 
@@ -122,8 +126,8 @@ Consider a function that maps people to their favorite colors:
 Pure functions are easier to reason about, test and debug: this enhances code readability and modularity, allowing developers to reuse them across different contexts with no unintended consequences.
 In software development a pure function is therefore characterized by two fundamental aspects:
 
-* __Determinism__: it always produces the same output when given the same input. This means that for any specific set of arguments, the function will consistently return the same result, without any variation
-* **No side effects**: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
+- **Determinism**: it always produces the same output when given the same input. This means that for any specific set of arguments, the function will consistently return the same result, without any variation
+- **No side effects**: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
 
 ---
 
@@ -132,19 +136,19 @@ In software development a pure function is therefore characterized by two fundam
 ```csharp
 // ❌ Impure: depends on external state, has side effects
 private static int counter = 0;
-public int GetNextId() 
+public int GetNextId()
 {
     counter++;           // Side effect: modifies external state
     return counter;      // Non-deterministic: different results
 }
 
 // ✅ Pure: deterministic, no side effects
-public int Add(int a, int b) 
+public int Add(int a, int b)
 {
     return a + b;        // Same inputs always produce same output
 }
 
-public string FormatName(string first, string last) 
+public string FormatName(string first, string last)
 {
     return $"{last}, {first}";  // Pure transformation
 }
@@ -156,7 +160,7 @@ public string FormatName(string first, string last)
 
 Consider two functions _f_ and _g_ where the output set of _f_ is (contained in) the input set of _g_:
 
-![ ](img/function-composition.png)
+![w:1000](img/composition.drawio.png)
 
 We can then define their composition as `(g○f)(x) ≡ g(f(x))`
 
@@ -164,36 +168,74 @@ We can then define their composition as `(g○f)(x) ≡ g(f(x))`
 
 ### FP/OOP comparison - principles of OOP
 
-* To write software using an OOP approach you need to understand (and use):
-  * encapsulation
-  * polymorphism
-  * inheritance
-* to write __good__ OOP software you also need:
-  * Design patterns (_decorator_, _factory_, _strategy_, _adapter_, ...)
+- To write software using an OOP approach you need to understand (and use):
+  - encapsulation
+  - polymorphism
+  - inheritance
+- to write **good** OOP software you also need:
+  - Design patterns (_decorator_, _factory_, _strategy_, _adapter_, ...)
 
 ---
 
 ### FP/OOP comparison - principles of FP
 
-* To write software using a FP approach you need to understand (and use):
-  * functions
-* to write __good__ FP software you also need:
-  * functions
+- To write software using a FP approach you need to understand (and use):
+  - functions
+- to write **good** FP software you also need:
+  - functions
 
 ---
 
 ### Example 1: Decorator pattern
 
-![ ](img/csharp/decorator.png)
+```C#
+bool isEven(int x) => x % 2 == 0;
+
+int triple(int x) => x * 3;
+
+// Decorate the usage of isEven with triple
+bool isEvenTripleOf(int x) => isEven(triple(x));
+
+Console.WriteLine($"Is triple of 2 even? {isEvenTripleOf(2)}"); // true
+
+bool deny(bool b) => !b;
+
+// Decorate the usage of isEven with deny
+bool isOdd(int x) => deny(isEven(x));
+
+Console.WriteLine($"Is 3 odd? {isOdd(3)}"); // true
+```
 
 ---
 
 ### Example 2: Strategy pattern
 
-![ ](img/csharp/strategy.png)
+```C#
+int lengthStrategy(string s) => s.Length;
+
+int doubleLengthStrategy(string s) => s.Length * 2;
+
+int rankOfFirstCharStrategy(string s) =>
+    "abcdefghijklmnnopqrstuvwxyz0123456789"
+        .IndexOf(s.ToLowerInvariant()[0]);
+
+static int doSomethingWithString(Func<string, int> f, string s) => f(s);
+
+// Strategy Pattern with higher-order functions
+var result1 = doSomethingWithString(lengthStrategy, "hello"); // 5
+Console.WriteLine($"Length of hello is {result1}");
+
+var result2 = doSomethingWithString(doubleLengthStrategy, "hello"); // 10
+Console.WriteLine($"Double length of hello is {result2}");
+
+var result3 = doSomethingWithString(rankOfFirstCharStrategy, "hello"); // 7
+Console.WriteLine($"Rank of first char of hello is {result3}");
+```
 
 ---
+
 <!-- _color: white -->
+
 ![bg brightness:.4](img/hyperspace.jpg)
 
 ## Part II: Venture into the _Monads_ hyperspace
@@ -204,7 +246,7 @@ We can then define their composition as `(g○f)(x) ≡ g(f(x))`
 
 ### Functors
 
-A __Functor__ is any type that acts as a generic wrapper (or container), together with a function to transform the values it holds while preserving the container's structure.
+A **Functor** is any type that acts as a generic wrapper (or container), together with a function to transform the values it holds while preserving the container's structure.
 
 This process is called _mapping_.
 
@@ -230,7 +272,7 @@ var numbers = new List<int> { 1, 2, 3, 4, 5 };
 // Functional pipeline: pure functions, no mutation
 var result = numbers
     .Where(x => x % 2 == 0)        // Filter
-    .Select(x => x * x)            // Map/Transform 
+    .Select(x => x * x)            // Map/Transform
     .Sum();                        // Reduce
 
 // Same as: var result = numbers.Where(IsEven).Select(Square).Sum();
@@ -252,9 +294,9 @@ static int Square(int x) => x * x;
 
 Intuitively, monads can be defined in terms of native types as follows:
 
-* given a type `T`, a monadic type `MT` (or `M<T>`) behaves like a wrapper of the type `T`
-* there should exist a `unit` function defining the wrapping logic, _`unit: T ──► MT`_
-* it should expose a `bind` function to allow for chaining computation with another monad _`bind: (MT, T ──► MU) ──► MU`_
+- given a type `T`, a monadic type `MT` (or `M<T>`) behaves like a wrapper of the type `T`
+- there should exist a `unit` function defining the wrapping logic, _`unit: T ──► MT`_
+- it should expose a `bind` function to allow for chaining computation with another monad _`bind: (MT, T ──► MU) ──► MU`_
 
 ---
 
@@ -262,9 +304,9 @@ Intuitively, monads can be defined in terms of native types as follows:
 
 _`unit`_ and _`bind`_ must satisfy three properties:
 
-* __right identity__: _`unit(x).bind(func) == func(x)`_
-* __left identity__: _`m.bind(unit) == m`_
-* __associativity__: _`m.bind(f).bind(g) = m.bind(x => f(x).bind(g))`_
+- **right identity**: _`unit(x).bind(func) == func(x)`_
+- **left identity**: _`m.bind(unit) == m`_
+- **associativity**: _`m.bind(f).bind(g) = m.bind(x => f(x).bind(g))`_
 
 ---
 
@@ -272,8 +314,8 @@ _`unit`_ and _`bind`_ must satisfy three properties:
 
 Monads are also _Functors_, a more generic structure that still relies on the embedding _unit_ function and exposes a _map_ function:
 
-* _`unit : T ──► MT`_
-* _`map : (MT, T ──► U) ──► MU`_
+- _`unit : T ──► MT`_
+- _`map : (MT, T ──► U) ──► MU`_
 
 The map function takes the wrapped value and maps it to another wrappable value to generate another functor.
 
@@ -281,13 +323,13 @@ The map function takes the wrapped value and maps it to another wrappable value 
 
 ### The Option Monad
 
-The __Option__ monad (also called __Maybe__) is generally used to describe situations where data can be present or not: it can contain _Some_ data or _None_.
+The **Option** monad (also called **Maybe**) is generally used to describe situations where data can be present or not: it can contain _Some_ data or _None_.
 
 To implement it in _C#_ we need all the elements that characterize a monad:
 
-* a _Unit_ function
-* a _Map_ function
-* a _Bind_ function
+- a _Unit_ function
+- a _Map_ function
+- a _Bind_ function
 
 ---
 
@@ -299,10 +341,10 @@ public string GetUserDisplayName(int userId)
 {
     var user = GetUser(userId);
     if (user == null) return "Unknown";
-    
+
     var profile = GetProfile(user.Id);
     if (profile == null) return user.Name;
-    
+
     return profile.DisplayName ?? user.Name;
 }
 
@@ -327,7 +369,7 @@ public string GetUserDisplayNameSafe(int userId)
 
 ### References
 
-* [Functional Programming Design Patterns](https://fsharpforfunandprofit.com/fppatterns/)
-* [tiny-fp](https://github.com/FrancoMelandri/tiny-fp)
-* [Basic understanding of Monads, Monoids, and Functor](https://blog.knoldus.com/basic-understanding-of-monads-monoids-and-functor/)
-* [Your easy guide to Monads, Applicatives, & Functors](https://medium.com/@lettier/your-easy-guide-to-monads-applicatives-functors-862048d61610)
+- [Functional Programming Design Patterns](https://fsharpforfunandprofit.com/fppatterns/)
+- [tiny-fp](https://github.com/FrancoMelandri/tiny-fp)
+- [Basic understanding of Monads, Monoids, and Functor](https://blog.knoldus.com/basic-understanding-of-monads-monoids-and-functor/)
+- [Your easy guide to Monads, Applicatives, & Functors](https://medium.com/@lettier/your-easy-guide-to-monads-applicatives-functors-862048d61610)
