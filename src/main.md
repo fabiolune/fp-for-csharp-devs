@@ -31,6 +31,40 @@ style: |
     text-align: right;
     width: 90%;
   }
+  pre, code {
+    background-color: #1f1f1f !important;
+    color: white;
+  }
+  .language-csharp {
+    color: white;
+  }
+  .hljs-keyword {
+    color: #569cd6;
+  }
+  .hljs-built_in {
+    color: #569cd6;
+  }
+  .hljs-title {
+    color: #4ec9b0;
+  }
+  .hljs-params {
+    color: #4ec9b0;
+  }
+  .hljs-function{
+    color: white;
+  }
+  .hljs-string {
+    color: #d69c7e;
+  }
+  .hljs-number {
+    color: #b5cea8;
+  }
+  .hljs-subst {
+    color: #9cdcfe;
+  }
+  .hljs-comment {
+    color: #579033;
+  }
 paginate: true
 backgroundColor: #ddffff
 ---
@@ -68,7 +102,7 @@ backgroundColor: #ddffff
 
 ## Why Functional Programming for C# Developers?
 
-- **You already use it**: LINQ, delegates, lambda expressions, pattern matching
+- **You already use it**: Linq, delegates, lambda expressions, pattern matching
 - **Better code quality**: More predictable, testable, and maintainable code
 - **Reduced bugs**: Immutability and pure functions eliminate entire classes of errors
 - **Parallel processing**: FP naturally supports concurrent and parallel execution
@@ -124,8 +158,8 @@ Consider a function that maps people to their favorite colors:
 Pure functions are easier to reason about, test and debug: this enhances code readability and modularity, allowing developers to reuse them across different contexts with no unintended consequences.
 In software development a pure function is therefore characterized by two fundamental aspects:
 
-* **Determinism**: it always produces the same output when given the same input. This means that for any specific set of arguments, the function will consistently return the same result, without any variation
-* **No side effects**: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
+- **Determinism**: it always produces the same output when given the same input. This means that for any specific set of arguments, the function will consistently return the same result, without any variation
+- **No side effects**: it does not cause any side effects, meaning it does not alter any external state or rely on data that can change outside of its scope. It does not depend on nor modify global variables, its behavior only depends on its inputs
 
 ---
 
@@ -256,13 +290,13 @@ A `List<T>` is a container for items of type `T`, and with the `Select` method i
 List<T2> Select<T1, T2>(List<T1> source, Func<T1, T2> selector)
 ```
 
-This is exactly the LINQ `Select` method you already know!
+This is exactly the Linq `Select` method you already know!
 
 ---
 
-### LINQ as Functional Programming
+### Linq as Functional Programming
 
-You're already doing functional programming with LINQ!
+You're already doing functional programming with Linq!
 
 ```csharp
 var numbers = new List<int> { 1, 2, 3, 4, 5 };
@@ -284,7 +318,7 @@ static int Square(int x) => x * x;
 
 ### Functor example
 
-```C#
+```csharp
 static Output nullify(Input i) => null;
 static Output combine(Input i) => new($"{i.FirstName} {i.LastName}");
 
