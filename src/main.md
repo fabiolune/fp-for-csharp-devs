@@ -243,24 +243,24 @@ Console.WriteLine($"Is 3 odd? {isOdd(3)}"); // true
 ### Example 2: Strategy pattern
 
 ```C#
-int lengthStrategy(string s) => s.Length;
+int getLength(string s) => s.Length;
 
-int doubleLengthStrategy(string s) => s.Length * 2;
+int getDoubleLength(string s) => s.Length * 2;
 
-int rankOfFirstCharStrategy(string s) =>
+int getRankOfFirstChar(string s) =>
     "abcdefghijklmnnopqrstuvwxyz0123456789"
         .IndexOf(s.ToLowerInvariant()[0]);
 
 static int doSomethingWithString(Func<string, int> f, string s) => f(s);
 
 // Strategy Pattern with higher-order functions
-var result1 = doSomethingWithString(lengthStrategy, "hello"); // 5
+var result1 = doSomethingWithString(getLength, "hello"); // 5
 Console.WriteLine($"Length of hello is {result1}");
 
-var result2 = doSomethingWithString(doubleLengthStrategy, "hello"); // 10
+var result2 = doSomethingWithString(getDoubleLength, "hello"); // 10
 Console.WriteLine($"Double length of hello is {result2}");
 
-var result3 = doSomethingWithString(rankOfFirstCharStrategy, "hello"); // 7
+var result3 = doSomethingWithString(getRankOfFirstChar, "hello"); // 7
 Console.WriteLine($"Rank of first char of hello is {result3}");
 ```
 
