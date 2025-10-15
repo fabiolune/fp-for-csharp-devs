@@ -31,6 +31,7 @@ style: |
     text-align: right;
     width: 90%;
   }
+  
   pre, code {
     background-color: #1f1f1f !important;
     color: white;
@@ -38,6 +39,7 @@ style: |
   .language-csharp {
     color: white;
   }
+
   .hljs-keyword {
     color: #569cd6;
   }
@@ -45,7 +47,7 @@ style: |
     color: #569cd6;
   }
   .hljs-title {
-    color: #4ec9b0;
+    color: #dccd79;
   }
   .hljs-params {
     color: #4ec9b0;
@@ -59,12 +61,18 @@ style: |
   .hljs-number {
     color: #b5cea8;
   }
+  .hljs-literal {
+    color: #569cd6;
+  }
   .hljs-subst {
     color: #9cdcfe;
   }
   .hljs-comment {
     color: #579033;
   }
+
+
+
 paginate: true
 backgroundColor: #ddffff
 ---
@@ -387,37 +395,42 @@ To implement it in _C#_ we need all the elements that characterize a monad:
 
 ---
 
-### Option Monad: Practical Usage
-
-```csharp
-// Without Option: null checks everywhere
-public string GetUserDisplayName(int userId)
-{
-    var user = GetUser(userId);
-    if (user == null) return "Unknown";
-
-    var profile = GetProfile(user.Id);
-    if (profile == null) return user.Name;
-
-    return profile.DisplayName ?? user.Name;
-}
-
-// With Option: chain operations safely
-public string GetUserDisplayNameSafe(int userId)
-{
-    return GetUserOption(userId)
-        .Bind(user => GetProfileOption(user.Id)
-            .Map(profile => profile.DisplayName)
-            .Or(() => Some(user.Name)))
-        .ValueOr("Unknown");
-}
-```
-
----
-
 ### The Option Monad: a simple C# implementation
 
-![ ](img/csharp/option.png)
+```csharp
+public record Option<T>
+{
+    public static Option<T> Unit(T t) => t is null ? None : new(t);
+    public static readonly Option<T> None = new();
+
+    private readonly T _value;
+    public bool IsSome { get; private set; }
+    public bool IsNone { get; private set; }
+
+    private Option()
+    {
+        IsSome = false;
+        IsNone = !IsSome;
+    }
+
+    private Option(T value)
+    {
+        _value = value;
+        IsSome = true;
+        IsNone = !IsSome;
+    }
+
+    public Option<U> Bind<U>(Func<T, Option<U>> f) =>
+        IsNone
+            ? Option<U>.None
+            : f(_value);
+
+    public Option<U> Map<U>(Func<T, U> f) =>
+        IsNone
+            ? Option<U>.None
+            : Option<U>.Unit(f(_value));
+}
+```
 
 ---
 
